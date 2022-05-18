@@ -23,7 +23,7 @@ async function run() {
     const todosCollection = client.db("todoApp").collection("todos");
     //get todos api
     app.get("/todos", async (req, res) => {
-      const result = todosCollection.find().toArray();
+      const result = await todosCollection.find().toArray();
       res.send(result);
     });
 
@@ -35,6 +35,12 @@ async function run() {
     });
 
     // delete todos api
+    app.delete("/todos/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await todosCollection.deleteOne(query);
+      res.send(result);
+    });
 
     // update todos api
   } finally {
