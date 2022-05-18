@@ -23,7 +23,8 @@ async function run() {
     const todosCollection = client.db("todoApp").collection("todos");
     //get todos api
     app.get("/todos", async (req, res) => {
-      const result = await todosCollection.find().toArray();
+      const email = req.query.email;
+      const result = await todosCollection.find({ email: email }).toArray();
       res.send(result);
     });
 
