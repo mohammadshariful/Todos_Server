@@ -21,7 +21,22 @@ async function run() {
   try {
     await client.connect();
     const todosCollection = client.db("todoApp").collection("todos");
-    console.log("mongodb connectd");
+    //get todos api
+    app.get("/todos", async (req, res) => {
+      const result = todosCollection.find().toArray();
+      res.send(result);
+    });
+
+    // post todos api
+    app.post("/todos", async (req, res) => {
+      const todo = req.body;
+      const result = todosCollection.insertOne(todo);
+      res.send(result);
+    });
+
+    // delete todos api
+
+    // update todos api
   } finally {
     //   client.close();
   }
